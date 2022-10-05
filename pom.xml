@@ -10,6 +10,7 @@
         <module>okhttp-tools</module>
         <module>httpclient-tools</module>
         <module>system-curl-tools</module>
+        <module>jsoup-tools</module>
     </modules>
     <packaging>pom</packaging>
 
