@@ -1,6 +1,8 @@
 # 参考
 
 [1.URLConnection类详解](https://www.cnblogs.com/shijiaqi1066/p/3753224.html)
+[2.java.net.URLConnection详解](https://blog.csdn.net/u012643122/article/details/47267725)
+[3.Java自定义网络](https://zq99299.github.io/java-tutorial/networking/cookies/))
 
 # 如何获取URLConnection实例对象
 
