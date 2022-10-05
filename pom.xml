@@ -9,6 +9,7 @@
         <module>native-java-network</module>
         <module>okhttp-tools</module>
         <module>httpclient-tools</module>
+        <module>system-curl-tools</module>
     </modules>
     <packaging>pom</packaging>
 
