@@ -1,9 +1,15 @@
 package com.theten52.tools;
 
+import com.theten52.tools.network.core.utils.XiaPiResultPrint;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 
 /**
  * TODO
@@ -52,15 +58,10 @@ class HttpRequestTest {
     }
 
     private void printResp(HttpResponse resp) {
-        System.out.println("url:" + resp.getUrl());
-        System.out.println("resp_status_code:" + resp.getStatusCode());
-        System.out.println("resp_content_type:" + resp.getContentType());
-        Map<String, String> cookies = resp.getCookies();
-        cookies.forEach((k, v) -> System.out.println("resp_cookies:" + "k[" + k + "]v[" + v + "]"));
 
-        Map<String, String> headers = resp.getHeaders();
-        headers.forEach((k, v) -> System.out.println("resp_headers:" + "k[" + k + "]v[" + v + "]"));
+        Map<String, List<String>> cookies = resp.getCookies().entrySet().stream().collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toList())));
+        Map<String, List<String>> headers = resp.getHeaders().entrySet().stream().collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toList())));
 
-        System.out.println("resp_result:" + resp.getHtml());
+        XiaPiResultPrint.print(resp.getStatusCode(), resp.getContentType(), headers, cookies, resp.getHtml());
     }
 }

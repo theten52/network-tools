@@ -13,18 +13,31 @@
 各种方式测试结果如下：
 
 
-| 访问方式                  | 结果                                                                                                                           | 说明                                                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| native-java-Socket        |                                                                                                                                | TODO                                                             |
-| native-java-URLConnection | 可以正常访问，不带Header（header中cookie信息）的情况下<br />第一次访问会失败，重复请求可以成功。带上header后可以正常访问成功。 |                                                                  |
-| okhttp                    | 可以正常访问，小概率会失败，失败重试可以访问成功。                                                                             |                                                                  |
-| jsoup                     | 可以正常访问，小概率会失败，失败重试可以访问成功。                                                                             |                                                                  |
-| httpclient                | 无法正常访问。                                                                                                                 |                                                                  |
-| hutools                   |                                                                                                                                | TODO                                                             |
-| netty-httpclient          |                                                                                                                                | TODO                                                             |
-| java-curl                 |                                                                                                                                | TODO[java-curl](https://github.com/rockswang/java-curl)          |
-| jPowerShell               |                                                                                                                                | TODO[jPowerShell](https://github.com/profesorfalken/jPowerShell) |
+| 访问方式                  | 结果                                                                                                                           | 说明                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| native-java-Socket        |                                                                                                                                | TODO                                                                           |
+| native-java-URLConnection | 可以正常访问，不带Header（header中cookie信息）的情况下<br />第一次访问会失败，重复请求可以成功。带上header后可以正常访问成功。 |                                                                                |
+| okhttp                    | 可以正常访问，小概率会失败，失败重试可以访问成功。                                                                             |                                                                                |
+| jsoup                     | 可以正常访问，小概率会失败，失败重试可以访问成功。                                                                             |                                                                                |
+| httpclient                | 无法正常访问。                                                                                                                 |                                                                                |
+| hutools                   |                                                                                                                                | TODO                                                                           |
+| netty-httpclient          |                                                                                                                                | TODO                                                                           |
+| native-java-command       | 无法正常访问。                                                                                                                 | 使用java.lang.Process执行系统的curl命令                                        |
+| java-curl                 |                                                                                                                                | 使用jcurl库执行curl命令TODO[java-curl](https://github.com/rockswang/java-curl) |
+| jPowerShell               |                                                                                                                                | TODO[jPowerShell](https://github.com/profesorfalken/jPowerShell)               |
 
-参考：
+> 注意：以上方式使用JDK8环境进行测试，JDK11环境下测试失败。
+
+TODO
+
+1.输出打印。
+
+2.curl命令转输入。（或者使用postman代码生成）。
+
+3.代码转移到测试类中，可以一键执行，方便观察测试结果。
+
+4.测试类类名使用对应的模块名称标识，便于观察。
+
+### 参考：
 
 [native-java-network](./native-java-network/README.MD)

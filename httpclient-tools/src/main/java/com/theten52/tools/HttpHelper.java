@@ -1,6 +1,7 @@
 package com.theten52.tools;
 
-import cn.hutool.core.util.StrUtil;
+import com.theten52.tools.network.core.utils.XiaPiResultPrint;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -10,32 +11,17 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 
 public class HttpHelper {
 
     private static final CloseableHttpClient HTTP_CLIENT = HttpClients.createDefault();
-
-    public static String getResource(String url) {
-        if (StrUtil.isNotBlank(url)) {
-            System.out.println("url is empty");
-            return null;
-        }
-
-        HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("Accept-Language", "zh-CN");
-
-        try (CloseableHttpResponse rep = HTTP_CLIENT.execute(httpGet)) {
-            StatusLine statusLine = rep.getStatusLine();
-            if (statusLine.getStatusCode() >= 200 && statusLine.getStatusCode() < 300) {
-                HttpEntity entity = rep.getEntity();
-                return EntityUtils.toString(entity);
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void main(String[] args) {
         HttpGet request = new HttpGet("https://id.xiapibuy.com/api/v4/item/get?itemid=7532028281&shopid=255365082");
@@ -70,35 +56,30 @@ public class HttpHelper {
         //request.header("X-Forwarded-For", "203.0.113.195");
 
 
-        try (CloseableHttpResponse rep = HTTP_CLIENT.execute(request)) {
-            StatusLine statusLine = rep.getStatusLine();
-            if (statusLine.getStatusCode() >= 200 && statusLine.getStatusCode() < 300) {
-                HttpEntity entity = rep.getEntity();
-                String s = EntityUtils.toString(entity);
-                System.out.println(s);
-            } else {
-
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        execute(request);
         try {
-            Thread.sleep(5000L);
+            Thread.sleep(1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        execute(request);
+    }
+
+    private static void execute(HttpGet request) {
         try (CloseableHttpResponse rep = HTTP_CLIENT.execute(request)) {
             StatusLine statusLine = rep.getStatusLine();
             if (statusLine.getStatusCode() >= 200 && statusLine.getStatusCode() < 300) {
                 HttpEntity entity = rep.getEntity();
                 String s = EntityUtils.toString(entity);
-                System.out.println(s);
-            } else {
+                Header[] allHeaders = rep.getAllHeaders();
+                Map<String, List<String>> headers = Arrays.stream(allHeaders).collect(groupingBy(Header::getName, mapping(Header::getValue, toList())));
 
+                XiaPiResultPrint.print(statusLine.getStatusCode(), null, headers, null, s);
+            } else {
+                System.out.println("httpclient请求失败：" + statusLine);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
