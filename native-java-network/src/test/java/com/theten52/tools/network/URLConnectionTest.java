@@ -1,12 +1,11 @@
 package com.theten52.tools.network;
 
+import cn.hutool.core.io.IoUtil;
+import com.theten52.tools.network.core.utils.XiaPiResultPrint;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -61,21 +60,15 @@ public class URLConnectionTest {
 
             //获取读入流
             in = uc.getInputStream();
-            //放入缓存流
-            InputStream raw = new BufferedInputStream(in);
-            //最后使用Reader接收
-            Reader r = new InputStreamReader(raw);
-
-            //打印输出
-            int c;
-            while ((c = r.read()) > 0) {
-                System.out.print((char) c);
-            }
+            String result = IoUtil.read(in).toString();
 
             Map<String, List<String>> headerFields = uc.getHeaderFields();
-            headerFields.forEach((k, v) -> {
-                v.forEach(i -> System.out.println("k:" + k + ",i:" + i));
-            });
+
+            String statusLine = uc.getHeaderField(null);
+            String[] statusLineArr = statusLine.split(" ");
+            String statusCode = statusLineArr[1];
+
+            XiaPiResultPrint.print(Integer.parseInt(statusCode), null, headerFields, null, result);
 
         } catch (IOException e) {
             e.printStackTrace();

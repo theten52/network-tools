@@ -56,9 +56,9 @@ public class XiaPiResultPrint {
 
     private static void printResult(String result) {
         if (StrUtil.isNotBlank(result) && result.contains("\"error\":90309999")) {
-            System.err.println("❌：" + result);
+            System.err.println("HTTP Response:❌" + result);
         } else {
-            System.out.println("✅：" + result);
+            System.out.println("HTTP Response:✅" + result);
         }
     }
 }
