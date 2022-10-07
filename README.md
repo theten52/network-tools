@@ -38,6 +38,10 @@ TODO
 
 4.测试类类名使用对应的模块名称标识，便于观察。
 
-### 参考：
+### 参考
 
 [native-java-network](./native-java-network/README.MD)
+
+### 资源
+
+[curl转换为代码](https://github.com/curlconverter/curlconverter) [在线地址](https://curlconverter.com/)
