@@ -124,7 +124,7 @@ public class CurlTest {
 
     private static String[] processPostmanCurl(String curlText) {
 
-        String[] s = Arrays.stream(curlText.split("\\\n")).filter(StrUtil::isNotBlank).toArray(String[]::new);
+        String[] s = Arrays.stream(curlText.split("\n")).filter(StrUtil::isNotBlank).toArray(String[]::new);
         List<String> list = new ArrayList<>();
         for (String s1 : s) {
             String str = s1.trim();
@@ -182,7 +182,7 @@ public class CurlTest {
 
     private static String[] processOriginCurl(String curlText) {
 
-        String[] s = Arrays.stream(curlText.split("\\\n")).filter(StrUtil::isNotBlank).toArray(String[]::new);
+        String[] s = Arrays.stream(curlText.split("\n")).filter(StrUtil::isNotBlank).toArray(String[]::new);
         List<String> list = new ArrayList<>();
         for (String s1 : s) {
             String str = s1.trim();
