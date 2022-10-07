@@ -25,4 +25,10 @@ public class JavaCurlPlay {
         curl.exec();
         return curl;
     }
+
+    public static CUrl exec(String[] opts) {
+        CUrl curl = new CUrl().opt(opts);
+        curl.exec();
+        return curl;
+    }
 }
