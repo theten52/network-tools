@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CurlTest {
     static String[] cmdParts1 = {
@@ -138,7 +139,7 @@ public class CurlTest {
                     //去除单引号
                     String trim = str.substring(30, str.length() - 2).trim();
                     if (trim.startsWith("'") && trim.endsWith("'")) {
-                        list.add(trim.substring(1, trim.length() - 2));
+                        list.add(trim.substring(1, trim.length() - 1));
                     } else {
                         list.add(trim);
                     }
@@ -158,10 +159,25 @@ public class CurlTest {
             }
         }
         // 添加一个header："--header", "X-Forwarded-For: 10.139.253.111"
-        list.add("--header");
-        list.add("'X-Forwarded-For: 10.139.253.111'");
+        // list.add("--header");
+        // list.add("'X-Forwarded-For: 10.139.253.111'");
+
+        list = removeSingleQuotes(list);
 
         return list.toArray(new String[0]);
+    }
+
+    private static List<String> removeSingleQuotes(List<String> list) {
+        return list.stream()
+                .map(o -> {
+                    if (o.startsWith("'") && o.endsWith("'")) {
+                        return o.substring(1, o.length() - 1);
+                    } else {
+                        return o;
+                    }
+
+                })
+                .collect(Collectors.toList());
     }
 
     private static String[] processOriginCurl(String curlText) {
