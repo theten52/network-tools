@@ -3,9 +3,6 @@ package com.theten52.tools;
 
 import cn.hutool.core.util.StrUtil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +19,7 @@ public class CurlTest {
     };
 
     public static void main(String[] args) {
-        String[] strings = processOriginCurl(originalCurl);
+        String[] strings = processPostmanCurl(postmanCurl);
         for (String str : strings) {
             if (str.startsWith("http") || str.startsWith("--header") || str.startsWith("-H")) {
                 System.out.println(str + " ");
@@ -31,8 +28,8 @@ public class CurlTest {
             }
         }
         System.out.println();
-        String s = execCmdParts(strings);
-        if (s == null || StrUtil.isNotBlank(s) || s.contains("\"error\":90309999")) {
+        String s = SystemCommandUtils.execCmd(strings);
+        if (StrUtil.isNotBlank(s) && s.contains("\"error\":90309999")) {
             System.out.println("❌：" + s);
         } else {
             System.out.println("✅：" + s);
@@ -68,10 +65,10 @@ public class CurlTest {
             "--header 'authority: id.xiapibuy.com' \\\n" +
             "--header 'accept: application/json' \\\n" +
             "--header 'accept-language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7' \\\n" +
-            "--header 'af-ac-enc-dat: AAcyLjMuMi00AAABg6FROpEAAAxNAlcAAAAAAAAAALUc1tfPtx2eNZ+lQGEPXp3+N/Sd7x5uc+Su7cAene+kmuo5I5cqlWoElPRl6ekEWeJsUptHCecgZgZUJNkMdyN9VJJ4Fcmn7nW9/iudAovi3Q4KeZFjs4yw8pGWNnYQjtmnppZkfx9s4w5mdq+xn6n9CtBqjYL9eKtscmx0v9UESe7UD5Fjs4yw8pGWNnYQjtmnppaeKwVmxFcF4ObDBrVINAKBdpYoBoaFxN4DV/pDl++L3/+NBeKB3wKlJvciBdWBBvaaeijPYf2G85HzJCJhO1xsu7KKtg+IfFmuwykkfhJDjQTNue0ItFTg/V6S7yZ8b+URul/bNcp2Sur50wYMwSDikzRUuI9VU/LDpdQRLTm64iSmZ5ThVbxHE3bdSJ9U0k5djSR7fl8kZiNFp11d12JqI4GTqcIATPt0rYY/lg4GZoZ/6ktmA7MUhEIUj6kljFqZodbQEboXldfnVQFaMWIRrUq2io6kjRkGnw5JC7ja0YFovT2tvG0p7cDHKgUGL93c/eepLj1lWtbHvNydwzvOa8ZStWbkuVsfU1NJsDNWgQw2vl6G5BYjnlVUlNQzjfl60IFyefQS4QYdAcZKZtV5I4GTqcIATPt0rYY/lg4GZj+Nb4u1WHdUbCpXPApg4mZ9oqHNx6IiMU8cE40c458vJ3sXY0pNMunSQQvtExUbtN8KGuKS7t75OG7HfrT1pgMwhI+YiNH/GP07SAnecP+UZMBWDhT2yZm1nTpH6VAmUXk2o2vAiFhae2cy1xcnWzIzd2M3mBXX19lEIVCN2i+VJsmnz6s86WzMSRw/5y6a0g==' \\\n" +
+            "--header 'af-ac-enc-dat: AAcyLjMuMi00AAABg6IB9VoAAAxPAlcAAAAAAAAAALUc1tfPtx2eNZ+lQGEPXp3+N/SdzqNmxlp1L4tff1r27p8SwpcqlWoElPRl6ekEWeJsUptHCecgZgZUJNkMdyN9VJJ4Fcmn7nW9/iudAovi3Q4KeZFjs4yw8pGWNnYQjtmnppZkfx9s4w5mdq+xn6n9CtBqjYL9eKtscmx0v9UESe7UD5Fjs4yw8pGWNnYQjtmnppaeKwVmxFcF4ObDBrVINAKBdpYoBoaFxN4DV/pDl++L3/+NBeKB3wKlJvciBdWBBvaaeijPYf2G85HzJCJhO1xsKL1Rr43EU9rxBiNpNsgWiwTNue0ItFTg/V6S7yZ8b+URul/bNcp2Sur50wYMwSDikzRUuI9VU/LDpdQRLTm64iSmZ5ThVbxHE3bdSJ9U0k5djSR7fl8kZiNFp11d12JqI4GTqcIATPt0rYY/lg4GZoZ/6ktmA7MUhEIUj6kljFqZodbQEboXldfnVQFaMWIRrUq2io6kjRkGnw5JC7ja0YFovT2tvG0p7cDHKgUGL93c/eepLj1lWtbHvNydwzvOa8ZStWbkuVsfU1NJsDNWgQw2vl6G5BYjnlVUlNQzjfl60IFyefQS4QYdAcZKZtV5I4GTqcIATPt0rYY/lg4GZj+Nb4u1WHdUbCpXPApg4mao52Taa8i2RDDJAlpz1hDHJ3sXY0pNMunSQQvtExUbtN8KGuKS7t75OG7HfrT1pgMwhI+YiNH/GP07SAnecP+UZMBWDhT2yZm1nTpH6VAmUXk2o2vAiFhae2cy1xcnWzIzd2M3mBXX19lEIVCN2i+VJsmnz6s86WzMSRw/5y6a0g==' \\\n" +
             "--header 'cache-control: no-cache' \\\n" +
             "--header 'content-type: application/json' \\\n" +
-            "--header 'cookie: _gcl_au=1.1.1840652981.1664857785; __LOCALE__null=ID; _med=refer; csrftoken=oMhuB0OBgpKqQ7C20e73g2ca00YbnoS6; SPC_IA=-1; SPC_EC=-; REC_T_ID=ee246ab6-439e-11ed-b432-7225fb1efecf; SPC_T_ID=\"yGzjXLDcorZya0Xnb7jH5IBeeL98nBTzCTY4/trAjocNRigjPXNEBsvkGDUoVeZbYT9150ohs/K1NOXuLFrEm6xZXU0S510jxtwTvUKUrAA=\"; SPC_U=-; SPC_T_IV=\"Ya9UwiCPwlFhNQxuDmeDAg==\"; REC_T_ID=ee20d14a-439e-11ed-9705-9440c93f3434; SPC_R_T_ID=7ws+HLHYrgi1JyfWD8JaC/KGcBJcklh4Z5FOKyuKWYPJU18krbP8mSB58LxmWanME2Z4x6TZrbWL2NkZYVp5ZCX10oQdqQoZo/VWIRrcqaQrkn6hJFtPI2vKD27pPMSt4hHe/Y/53FY8TznPTSA4oGFEAqS8NDHSKqKPtTnzwx0=; SPC_R_T_IV=N1JSNEZZZDRoREN1bHdmRw==; SPC_T_ID=7ws+HLHYrgi1JyfWD8JaC/KGcBJcklh4Z5FOKyuKWYPJU18krbP8mSB58LxmWanME2Z4x6TZrbWL2NkZYVp5ZCX10oQdqQoZo/VWIRrcqaQrkn6hJFtPI2vKD27pPMSt4hHe/Y/53FY8TznPTSA4oGFEAqS8NDHSKqKPtTnzwx0=; SPC_T_IV=N1JSNEZZZDRoREN1bHdmRw==; SPC_SI=vhs0YwAAAABtczN6MzlkcfzTqAAAAAAAM2lGQXN4eGY=; SPC_F=eqIkQMCvOacgrOpUOQb07oMditTUFFEC; _QPWSDCXHZQA=0d4b4b22-c88e-44a5-a0d3-51d331f692b5; cto_bundle=Ah5RXF9mRVAxSk81MzFkbGl6WSUyQjROWHZlMUVoVTBOdXJTaTA1UUJYVWo2OVhTclJSS2pmTFkyajU1R2tCUHA0Q2tRNGFONTF3RWJVMlJBTGl5YlBuUnV3NG9yVUZocUpVdmFWSGxST3BOcTlYS3NOc3NTa2JOd25TUnh3MExidk9xQ0JGYUk4dlNhdGJVdXlmMHEyQkJZMTVLNHlBJTJCRlJlMDIwRks2UXNreHhQS3FsV1k1NFNmTkN1JTJCczZMdTBKOG9HYTczQ2ljNWEyZHNuVU5RWSUyRiUyRnYyRmhlUSUzRCUzRA; SPC_R_T_ID=7ws+HLHYrgi1JyfWD8JaC/KGcBJcklh4Z5FOKyuKWYPJU18krbP8mSB58LxmWanME2Z4x6TZrbWL2NkZYVp5ZCX10oQdqQoZo/VWIRrcqaQrkn6hJFtPI2vKD27pPMSt4hHe/Y/53FY8TznPTSA4oGFEAqS8NDHSKqKPtTnzwx0=; SPC_R_T_IV=N1JSNEZZZDRoREN1bHdmRw==; SPC_SI=vhs0YwAAAABtczN6MzlkcfzTqAAAAAAAM2lGQXN4eGY=; SPC_T_ID=7ws+HLHYrgi1JyfWD8JaC/KGcBJcklh4Z5FOKyuKWYPJU18krbP8mSB58LxmWanME2Z4x6TZrbWL2NkZYVp5ZCX10oQdqQoZo/VWIRrcqaQrkn6hJFtPI2vKD27pPMSt4hHe/Y/53FY8TznPTSA4oGFEAqS8NDHSKqKPtTnzwx0=; SPC_T_IV=N1JSNEZZZDRoREN1bHdmRw==' \\\n" +
+            "--header 'cookie: SPC_SI=3hs0YwAAAABjZENnSjgzZ5bfrQAAAAAAaHBRWEJ0QWQ=; SPC_F=hBrQhw0KNoxgTaQfmckmMB4htCvkC4Dh; REC_T_ID=76a50dcf-43ba-11ed-b7d1-2cea7fac4cc4; SPC_R_T_ID=/7xldhXHanp7KBghEVJaVfZNOWvxE6a7hGDnZ8M5m6k0/yXnnIcviXNEezwCMbGxwN42Sb070I6W8TQ7e5g1mRrie1RJYZFZs0Zdo3dPgrCtMOTN/KRYAXtIh/6cn+7S6b18kfT8dumaS0NIo/VdQ4uRS6KlVPNwxhSI754fQyA=; SPC_R_T_IV=R2JwaXZIQk5OemlSRm9pcA==; SPC_T_ID=/7xldhXHanp7KBghEVJaVfZNOWvxE6a7hGDnZ8M5m6k0/yXnnIcviXNEezwCMbGxwN42Sb070I6W8TQ7e5g1mRrie1RJYZFZs0Zdo3dPgrCtMOTN/KRYAXtIh/6cn+7S6b18kfT8dumaS0NIo/VdQ4uRS6KlVPNwxhSI754fQyA=; SPC_T_IV=R2JwaXZIQk5OemlSRm9pcA==; csrftoken=TJGpFeZ9UnzPHqi40XFrP6mR6GflBl9k; _gcl_au=1.1.543085384.1664870366; _med=refer; __LOCALE__null=ID; SPC_R_T_ID=/7xldhXHanp7KBghEVJaVfZNOWvxE6a7hGDnZ8M5m6k0/yXnnIcviXNEezwCMbGxwN42Sb070I6W8TQ7e5g1mRrie1RJYZFZs0Zdo3dPgrCtMOTN/KRYAXtIh/6cn+7S6b18kfT8dumaS0NIo/VdQ4uRS6KlVPNwxhSI754fQyA=; SPC_R_T_IV=R2JwaXZIQk5OemlSRm9pcA==; SPC_SI=3hs0YwAAAABjZENnSjgzZ5bfrQAAAAAAaHBRWEJ0QWQ=; SPC_T_ID=/7xldhXHanp7KBghEVJaVfZNOWvxE6a7hGDnZ8M5m6k0/yXnnIcviXNEezwCMbGxwN42Sb070I6W8TQ7e5g1mRrie1RJYZFZs0Zdo3dPgrCtMOTN/KRYAXtIh/6cn+7S6b18kfT8dumaS0NIo/VdQ4uRS6KlVPNwxhSI754fQyA=; SPC_T_IV=R2JwaXZIQk5OemlSRm9pcA==' \\\n" +
             "--header 'pragma: no-cache' \\\n" +
             "--header 'referer: https://id.xiapibuy.com/Wardah-UV-Shield-Essential-Sunscreen-Gel-SPF-30-PA-40-ml-i.59763733.4656131375?sp_atk=b8bd5424-60fe-4e23-8c87-412b464083d1&xptdk=b8bd5424-60fe-4e23-8c87-412b464083d1' \\\n" +
             "--header 'sec-ch-ua: \"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"' \\\n" +
@@ -80,9 +77,10 @@ public class CurlTest {
             "--header 'sec-fetch-dest: empty' \\\n" +
             "--header 'sec-fetch-mode: cors' \\\n" +
             "--header 'sec-fetch-site: same-origin' \\\n" +
+            "--header 'sz-token: false||MTAwMDI=' \\\n" +
             "--header 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36' \\\n" +
             "--header 'x-api-source: pc' \\\n" +
-            "--header 'x-csrftoken: oMhuB0OBgpKqQ7C20e73g2ca00YbnoS6' \\\n" +
+            "--header 'x-csrftoken: TJGpFeZ9UnzPHqi40XFrP6mR6GflBl9k' \\\n" +
             "--header 'x-requested-with: XMLHttpRequest' \\\n" +
             "--header 'x-shopee-language: id' \\\n" +
             "--header 'x-sz-sdk-version: 2.3.2-4'";
@@ -213,30 +211,5 @@ public class CurlTest {
         return list.toArray(new String[0]);
     }
 
-
-    public static String execCmdParts(String[] cmdParts) {
-        ProcessBuilder process = new ProcessBuilder(cmdParts);
-        Process p;
-        try {
-            p = process.start();
-            Thread.sleep(1000L);
-            p = process.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            StringBuilder builder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-                builder.append(System.getProperty("line.separator"));
-            }
-
-            return builder.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
-    }
 
 }

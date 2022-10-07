@@ -13,6 +13,7 @@
         <module>system-curl-tools</module>
         <module>jsoup-tools</module>
         <module>netty-httpclient</module>
+        <module>java-curl-lib</module>
     </modules>
     <packaging>pom</packaging>
 
