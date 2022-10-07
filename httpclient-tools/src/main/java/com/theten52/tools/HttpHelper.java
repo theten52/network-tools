@@ -1,5 +1,6 @@
 package com.theten52.tools;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,7 +16,7 @@ public class HttpHelper {
     private static final CloseableHttpClient HTTP_CLIENT = HttpClients.createDefault();
 
     public static String getResource(String url) {
-        if (StringUtils.isNotBlank(url)) {
+        if (StrUtil.isNotBlank(url)) {
             System.out.println("url is empty");
             return null;
         }

@@ -1,6 +1,8 @@
 package com.theten52.tools;
 
 
+import cn.hutool.core.util.StrUtil;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +32,7 @@ public class CurlTest {
         }
         System.out.println();
         String s = execCmdParts(strings);
-        if (s == null || StringUtils.isNotBlank(s) || s.contains("\"error\":90309999")) {
+        if (s == null || StrUtil.isNotBlank(s) || s.contains("\"error\":90309999")) {
             System.out.println("❌：" + s);
         } else {
             System.out.println("✅：" + s);
@@ -89,7 +91,7 @@ public class CurlTest {
 
     private static String[] processCharlesUrl(String curlText) {
 
-        String[] s = Arrays.stream(curlText.split(" -H ")).filter(StringUtils::isNotBlank).toArray(String[]::new);
+        String[] s = Arrays.stream(curlText.split(" -H ")).filter(StrUtil::isNotBlank).toArray(String[]::new);
         List<String> list = new ArrayList<>();
         for (String s1 : s) {
             String str = s1.trim();
@@ -123,7 +125,7 @@ public class CurlTest {
 
     private static String[] processPostmanCurl(String curlText) {
 
-        String[] s = Arrays.stream(curlText.split("\\\n")).filter(StringUtils::isNotBlank).toArray(String[]::new);
+        String[] s = Arrays.stream(curlText.split("\\\n")).filter(StrUtil::isNotBlank).toArray(String[]::new);
         List<String> list = new ArrayList<>();
         for (String s1 : s) {
             String str = s1.trim();
@@ -166,7 +168,7 @@ public class CurlTest {
 
     private static String[] processOriginCurl(String curlText) {
 
-        String[] s = Arrays.stream(curlText.split("\\\n")).filter(StringUtils::isNotBlank).toArray(String[]::new);
+        String[] s = Arrays.stream(curlText.split("\\\n")).filter(StrUtil::isNotBlank).toArray(String[]::new);
         List<String> list = new ArrayList<>();
         for (String s1 : s) {
             String str = s1.trim();

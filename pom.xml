@@ -35,6 +35,13 @@
                 <artifactId>core-tools</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.8</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
