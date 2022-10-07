@@ -9,7 +9,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * 使用jdk8可以访问成功，使用jdk11不能访问成功。很奇怪。
+ */
 public class URLConnectionTest {
     /**
      * step1:未添加任何请求头。
@@ -66,6 +71,11 @@ public class URLConnectionTest {
             while ((c = r.read()) > 0) {
                 System.out.print((char) c);
             }
+
+            Map<String, List<String>> headerFields = uc.getHeaderFields();
+            headerFields.forEach((k, v) -> {
+                v.forEach(i -> System.out.println("k:" + k + ",i:" + i));
+            });
 
         } catch (IOException e) {
             e.printStackTrace();
